@@ -51,16 +51,20 @@ const setToggleCompleted = (set) => (id) => {
 
 const setSortByDateCreated = (set) => () => {
   set((state) => ({
-    todos: [...state.todos].sort(
-      (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
-    ),
+    todos: [
+      ...state.todos.sort(
+        (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
+      ),
+    ],
   }));
 };
 const setSortByDateEdited = (set) => () => {
   set((state) => ({
-    todos: [...state.todos].sort(
-      (a, b) => new Date(b.dateEdited) - new Date(a.dateEdited)
-    ),
+    todos: [
+      ...state.todos.sort(
+        (a, b) => new Date(b.dateEdited) - new Date(a.dateEdited)
+      ),
+    ],
   }));
 };
 
