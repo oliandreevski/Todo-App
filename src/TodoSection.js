@@ -2,12 +2,14 @@ import { useState } from "react";
 import TodoItem from "./TodoItem";
 import { useStore } from "./store/store";
 import { toast, Toaster } from "react-hot-toast";
+import { set } from "date-fns";
 
 const TodoSection = () => {
   const createTodo = useStore((state) => state.createTodo);
   const todos = useStore((state) => state.todos);
   const filter = useStore((state) => state.filter);
   const filterValue = useStore((state) => state.filterValue);
+  const sortByName = useStore((state) => state.sortByName);
   const sortByDateCreated = useStore((state) => state.sortByDateCreated);
   const sortByDateEdited = useStore((state) => state.sortByDateEdited);
   const clearCompleted = useStore((state) => state.clearCompleted);
@@ -19,12 +21,17 @@ const TodoSection = () => {
     toast(`Filtered ${text.toUpperCase()} Todos`);
   };
 
-  const handleCreated = () => {
+  const handleName = (e) => {
+    sortByName();
+    toast(`Todos Sorted by Name`);
+  };
+  const handleCreated = (e) => {
     sortByDateCreated();
+
     toast(`Todos Sorted by Creation Date`);
   };
 
-  const handleEdited = () => {
+  const handleEdited = (e) => {
     sortByDateEdited();
     toast(`Todos Sorted by Edited Date`);
   };
@@ -54,7 +61,7 @@ const TodoSection = () => {
           className="textinput"
           placeholder="Add New Todo"
           value={inputText}
-          maxlength="50"
+          maxLength="50"
           onChange={(e) => setInputText(e.target.value)}
         />
         <button
@@ -81,11 +88,15 @@ const TodoSection = () => {
             <option value="completed">Completed</option>
             <option value="active">Active</option>
           </select>
+
           <div className="sort--btns">
-            <button className="date--btn" onClick={handleCreated}>
+            <button className={`date--btn`} onClick={handleName}>
+              Todo Name:
+            </button>
+            <button className={`date--btn`} onClick={handleCreated}>
               Date Created
             </button>
-            <button className="date--btn" onClick={handleEdited}>
+            <button className={`date--btn`} onClick={handleEdited}>
               Date Edited
             </button>
           </div>
